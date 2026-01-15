@@ -1,0 +1,7 @@
+Presention - TBD    
+Wrapping API - Jamie and Spandan
+Handling Errors - Spandan
+Unit Tests - Rex
+Continuous Integration - Rex
+Documentation - Jamie, Spandan, Rex
+
