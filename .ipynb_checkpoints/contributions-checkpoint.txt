@@ -1,11 +1,7 @@
-Presention - TBD
-Project Structure - Jamie
-Wrapping API - Jamie
+Presention - TBD    
+Wrapping API - Jamie and Spandan
 Handling Errors - Spandan
-Vignette - Spandan
 Unit Tests - Rex
 Continuous Integration - Rex
 Documentation - Jamie, Spandan, Rex
-Go Public - Jamie
-
 
