@@ -8,4 +8,7 @@ Jan 16
 Jan 18
 - We were discussing about the documents and the presentation.
 
+Jan 19
+- Worked on error handling
+
 
