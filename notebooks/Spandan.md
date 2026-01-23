@@ -12,4 +12,8 @@ Jan 19
 - Worked on error handling
 - Also created the branch
 
+Jan 22
+- Pulled the changes and will start with the changes
 
+Jan 23
+- Worked on error handling
