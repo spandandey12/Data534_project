@@ -2,11 +2,14 @@ We will each work in our own branch, committing often. When we complete a sectio
 
 | Task                  | Responsible |
 |-----------------------|-------------|
-| Presentation          | Jamie       |
+| Project Proposal      | Jamie       |
+| Presentation 1        | Jamie       |
+| Package Structure     | Spandan     |
 | Wrapping API          | Jamie       |
 | Handling Errors       | Spandan     |
 | Vignette              | Spandan     |
 | Unit Tests            | Rex         |
 | Continuous Integration| Rex         |
-| Documentation         | Jamie, Spandan, Rex |
-| Go Public             | Spandan     |
+| Documentation         | Spandan, Rex |
+| Go Public             | Rex         |
+| Presentation 2        | Jamie, Spandan |
