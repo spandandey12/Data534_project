@@ -41,7 +41,7 @@
 - Focused on the "Gap Analysis"—noting that while `ropenmeteo` exists, there isn't a package specifically catering to mountain summit comparisons.
 - Refined the logic for the `forecast_mountains` function to ensure it could handle different `time_resolution` arguments dynamically.
 - Integrated the mountain summit dataset logic: merged mountain filtering with API calling.
-- [Compare](https://github.com/spandandey12/Data534_project/commit/426bc95a3fe283cf73f024d36363fa84d42242ef)
+- [Commit](https://github.com/spandandey12/Data534_project/commit/426bc95a3fe283cf73f024d36363fa84d42242ef)
 
 **Jan 23**
 - Began drafting the `get_nearest_mountains` function.
@@ -66,7 +66,7 @@
 - Documented all four core functions (`get_forecast_raw`, `get_forecast`, `get_nearest_mountains`, and `forecast_mountains`).
 - Explicitly stated the data source (Andrew Kirmse) to ensure proper attribution.
 - Ensured all dependencies (`httr2`, `ggplot2`, `readr`, `geosphere`) were correctly listed.
-- [Compare](https://github.com/spandandey12/Data534_project/commit/7149daa768982bf1be8ca29dfe9f52f29bd0635d)
+- [Commit](https://github.com/spandandey12/Data534_project/commit/7149daa768982bf1be8ca29dfe9f52f29bd0635d)
 
 **Jan 29**
 - Refined the `forecast_mountains` loop.
