@@ -1,39 +1,85 @@
-Jan 14
+# Jamie's Work Notebook
 
-- Met with group to decide what API to use for the project. Decided on Open-Meteo since I have familiarity with it and it is good for beginners.
-- Decided who is reponsible for each part of the project.
+**Jan 14**
+- Met with group to decide on the project scope and API selection. 
+- **Decision:** Selected the Open-Meteo API due to its free tier, ease of use for beginners, and comprehensive weather variables (temperature, snowfall, wind speed).
+- Established team roles; I took the lead on the core API wrapper development.
 
-Jan 15
+**Jan 15**
+- Initialized the base R wrapper code in a Jupyter Notebook environment for rapid prototyping.
+- Developed `get_forecast_raw` using the `httr2` package to handle API queries.
+- Implemented `get_forecast` to parse JSON into structured dataframes, handling both hourly and daily resolutions.
+- Added preliminary plotting logic and structured the project directory for future R package conversion.
+- [Commit 0e9c0c1](https://github.com/spandandey12/Data534_project/commit/0e9c0c17884c582f1741553abc0c49e751f282ef)
 
-- Wrote the base code for the R wrapper. One function gets the hourly data as a dataframe. Another function to get the daily data as a dataframe. Functions to get weather feature units. A simple plotting function. Still needs error handling and unit tests, added comments. It is in a Jupyter Notebook for now, it will have to be moved to an R file.
-- Improved project structure.
+**Jan 16**
+- Conducted a code review of the initial wrapper. 
+- **Decision:** Identified a need for a mountain-specific dataset. Researched and sourced the Andrew Kirmse 2023 prominence dataset to ensure our "mountaineering" niche was data-backed.
 
-Jan 16
+**Jan 17**
+- Explored the Open-Meteo API documentation further to determine default variables.
+- **Decision:** Defined `default_variables` (rain, snowfall, cloud cover, etc.) to simplify the user experience, allowing beginners to get relevant data without manually specifying parameters.
 
+**Jan 18**
+- Drafted the project proposal report.
+
+**Jan 19**
+- Finalized the project proposal.
+- Refined the methodology section, specifically how we would calculate distances using the `geosphere` library and `distHaversine` formula.
+
+**Jan 20**
+- Prepared presentation slides for the proposal.
+- Created visual representations of how the `forecast_mountains` function would iterate through mountain lists to provide a side-by-side comparison.
+
+**Jan 21**
 - No work.
 
-Jan 17
+**Jan 22**
+- Presented proposal to the class and received feedback from the instructor regarding "uniqueness."
+- **Pivot Decision:** Shifted focus from historical data to real-time forecasting. This allows mountaineers to use the tool for trip planning.
+- Focused on the "Gap Analysis"—noting that while `ropenmeteo` exists, there isn't a package specifically catering to mountain summit comparisons.
+- Refined the logic for the `forecast_mountains` function to ensure it could handle different `time_resolution` arguments dynamically.
+- Integrated the mountain summit dataset logic: merged mountain filtering with API calling.
+- [Compare Changes](https://github.com/spandandey12/Data534_project/compare/3c1b435e209bfb45301e56bac338a2d02c2e2282...426bc95a3fe283cf73f024d36363fa84d42242ef)
 
+**Jan 23**
+- Began drafting the `get_nearest_mountains` function.
+- **Decision:** Added `prominence_threshold` and `elevation_threshold` as parameters. This is crucial for mountaineers who only want to find "significant" peaks rather than small hills.
+
+**Jan 24**
+- Debugging session for the `geosphere` integration.
+- Worked on converting the distance output from `distHaversine` (meters) to a more user-friendly kilometers format, rounding to one decimal place for clarity.
+
+**Jan 25**
+- Documentation planning.
+
+**Jan 26**
+- Researched how to mock API responses to test `get_forecast` without hitting the Open-Meteo rate limits during development.
+
+**Jan 27**
+- Collaborative Troubleshooting: Helped a teammate resolve a corrupted local file.
+- **Decision:** Reverted to a previous commit and added changes manually from there.
+
+**Jan 28**
+- Substantial README update.
+- Documented all four core functions (`get_forecast_raw`, `get_forecast`, `get_nearest_mountains`, and `forecast_mountains`).
+- Explicitly stated the data source (Andrew Kirmse) to ensure proper attribution.
+- Ensured all dependencies (`httr2`, `ggplot2`, `readr`, `geosphere`) were correctly listed.
+
+**Jan 29**
+- Refined the `forecast_mountains` loop.
+- **Decision:** Optimized the way the dataframe is initialized using `rownames(mountain)` to ensure the output table is easy for users to read at a glance.
+
+**Jan 30**
+- Review of the package vignette.
+- Tested the code with coordinates for UBCO (49.2593, -123.2475).
+
+**Jan 31**
 - No work.
 
-Jan 18
+**Feb 1**
+- Final team meeting before submission.
+- Reviewed the final presentation slides and synchronized the package versioning.
 
-- Done first draft of project proposal report.
-
-Jan 19
-
-- Done final draft of project proposal report.
-
-Jan 20
-
- Done presentation slides for project proposal.
-
-Jan 21
-
-- No work.
-
-Jan 22
-
-- Presented project proposal to class and got feedback.
-- Discussed with team, decided to change out API wrapper to fetch weather forecasts instead of historical weather data. This way, we can make the project more unique by combining functions that find the nearest mountain summits, so we can compare the forecasted weather at different nearby summits. This project is much more worthwhile.
-
+**Feb 2**
+- Final presentation to the class.
