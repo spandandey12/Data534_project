@@ -2,6 +2,8 @@
 
 This R package provides functions to find nearby mountains summits and to compare weather forecasts of those locations. This would be of interest to mountaineers, to help them decide which mountains to hike near their home or a destination. Weather forecasting is done using the [Open-Meteo API](https://open-meteo.com/). The mountain data is from [Andrew Kirmse](https://www.andrewkirmse.com/prominence-update-2023) in the form of a csv file. Although R wrappers for this API do exist already (such as [ropenmeteo](https://github.com/FLARE-forecast/ropenmeteo) and [openmeteo](https://tpisel.r-universe.dev/openmeteo)), none of these other wrappers have added functionality specific to mountaineering. A vignette is provided to provide an example of how to use the package.
 
+**Dependencies:** `httr2`, `ggplot2`, `readr`, `geosphere`
+
 ---
 
 ## Functions
