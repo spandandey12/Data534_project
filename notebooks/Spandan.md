@@ -17,3 +17,9 @@ Jan 22
 
 Jan 23
 - Worked on error handling
+ 
+Jan 27
+ - tried to fix some errors
+ 
+ Jan 28
+ - worked a bit on Vignette
