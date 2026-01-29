@@ -18,6 +18,8 @@ A low-level helper function that constructs and sends the API request to Open-Me
 
 #### Error Handling:
 * Validates **latitude** and **longitude** using **check_lat_lon()** (must be single numeric values and within valid coordinate ranges).
+* Validates **start_date** and **end_date** using **check_date_forecast()** (must be valid dates, start_date <= end_date, and end_date must be within 16 days of today due to the Open-Meteo Forecast API limit).
+* After the equest is performed, checks **resp_status(response)**. If status is not 200, the function stops with an informative message. If the JSON body contains a **reason** field, it is included in the error message.
 
 #### Unit Testing:
 * SOMETHING
