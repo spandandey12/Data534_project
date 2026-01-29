@@ -33,7 +33,7 @@ Fetches weather data for a specific location and returns a structured dataframe 
 * **variables**: (Vector) The weather metrics to retrieve (e.g., temperature, rain, snowfall).
 
 #### Error Handling:
-* SOMETHING
+* Ensures **time_resolution** is either **"hourly"**
 
 #### Unit Testing:
 * SOMETHING
