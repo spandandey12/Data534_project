@@ -17,7 +17,7 @@ A low-level helper function that constructs and sends the API request to Open-Me
 * **hourly_variables**: (Vector) List of hourly weather variables to request.
 
 #### Error Handling:
-* SOMETHING
+* Validates **latitude** and **longitude** using **check_lat_lon()** (must be single numeric values and within valid coordinate ranges).
 
 #### Unit Testing:
 * SOMETHING
