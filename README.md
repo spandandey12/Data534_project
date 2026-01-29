@@ -33,7 +33,9 @@ Fetches weather data for a specific location and returns a structured dataframe 
 * **variables**: (Vector) The weather metrics to retrieve (e.g., temperature, rain, snowfall).
 
 #### Error Handling:
-* Ensures **time_resolution** is either **"hourly"**
+* Ensures **time_resolution** is either **"hourly"** or **"daily"** or else stops with an error
+* Ensures **variables** is a non-empty character vertor or else stops with an error.
+* Uses get_forecast_raw() to handle coordinate and date validation along with HTTP error checking.
 
 #### Unit Testing:
 * SOMETHING
@@ -47,7 +49,10 @@ Finds the closest mountain peaks to a specific coordinate that are above elevati
 * **elevation_threshold**: (Numeric) Minimum elevation in meters (Default: 0).
 
 #### Error Handling:
-* SOMETHING
+* Validates **latitude** and **longitude** using **check_lat_lon()**.
+* Validates **num_mountains** is a single numeric value **>1**
+* Validates **prominence_threshold** and **elevation_threshold** are single numeric values **>0**.
+* If no mountains meet the filtering thresholds, stops with: ** "No mountains match your thresholds. Try lowering prominence_threshold/elevation_threshold."**
 
 #### Unit Testing:
 * SOMETHING
@@ -61,7 +66,11 @@ A wrapper that iterates through a dataframe of mountains to create a comparative
 * **weather_feature**: (String) The specific weather variable to extract into the final table (Default: `"temperature_2m"`).
 
 #### Error Handling:
-* SOMETHING
+* Ensures **mountains** is a non-empty dataframe.
+* Ensures **mountains** contains **latitude** and **longtitude** columns.
+* Ensures **weather_feature** is a single character string.
+* If the mountains dataframe has missing/empty rownames, assigns default names (**mountain_1**, **mountain_1**,...) o ensure valid output column names.
+* Relies on **get_forecast()**/**get_forecast_raw()** for coordinate/date/API error handling while looping through mountains.
 
 #### Unit Testing:
 * SOMETHING
