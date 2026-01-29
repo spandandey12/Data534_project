@@ -23,3 +23,4 @@ Jan 27
  
  Jan 28
  - worked a bit on Vignette
+ - working on the documentation
