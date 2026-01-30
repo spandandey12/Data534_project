@@ -8,6 +8,10 @@ jobs:
   R-CMD-check:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: openmeteoR
+
     steps:
       - uses: actions/checkout@v4
 
@@ -17,13 +21,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          working-directory: openmeteoR
           extra-packages: any::rcmdcheck
           needs: check
 
       - name: Run R CMD check
-        uses: r-lib/actions/check-r-package@v2
-        with:
-          working-directory: openmeteoR
-          upload-snapshots: true
+        run: |
+          R CMD check . --no-manual --as-cran
+
 
