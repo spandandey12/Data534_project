@@ -1,9 +1,3 @@
-
-library(httr2)
-library(ggplot2)
-library(readr)
-library(geosphere)
-
 # All mountains with over 500 m of prominence
 mountains <- read.csv('/Users/spandandey/Desktop/courses/Data 534/Data534_project/mountains.csv', header = TRUE)
 
