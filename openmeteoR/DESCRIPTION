@@ -8,4 +8,7 @@ Description: An R wrapper for accessing weather data from the Open-Meteo API.
 License: MIT
 Encoding: UTF-8
 LazyData: true
-Imports: httr, jsonlite
+Imports:
+    httr2,
+    jsonlite
+
