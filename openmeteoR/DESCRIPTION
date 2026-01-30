@@ -13,6 +13,7 @@ Imports:
     jsonlite,
     ggplot2,
     readr,
-    geosphere
+    geosphere,
+    utils
 
 
