@@ -1,7 +1,8 @@
 
 # All mountains with over 500 m of prominence
-mountains <- read.csv("mountains.csv", header = TRUE)
+file <- system.file("extdata", "mountains.csv", package = "openmeteoR")
 
+mountains <- read.csv(file, header = TRUE)
 # The default weather variables fetched by the API, all are hourly
 default_variables <- c(
   "temperature_2m",
