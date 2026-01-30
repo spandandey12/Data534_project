@@ -3,14 +3,11 @@ name: R-CMD-check
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   R-CMD-check:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: openmeteoR
 
     steps:
       - uses: actions/checkout@v4
@@ -21,11 +18,13 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          working-directory: openmeteoR
           extra-packages: any::rcmdcheck
           needs: check
 
-      - name: Run R CMD check
-        run: |
-          R CMD check . --no-manual --as-cran
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          working-directory: openmeteoR
+          upload-snapshots: true
 
 
