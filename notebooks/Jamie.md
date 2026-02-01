@@ -2,7 +2,7 @@
 
 **Jan 14**
 - Met with group to decide on the project scope and API selection. 
-- **Decision:** Selected the Open-Meteo API due to its free tier, ease of use for beginners, and comprehensive weather variables (temperature, snowfall, wind speed).
+- Selected the Open-Meteo API due to its free tier, ease of use for beginners, and comprehensive weather variables (temperature, snowfall, wind speed).
 - Established team roles; I took the lead on the core API wrapper development. Pushed contribution document to git repo.
 - [Commit](https://github.com/spandandey12/Data534_project/commit/9a28d8bd8299e72635cd533f0afeaaa1cf8b0fc1)
 
@@ -15,37 +15,37 @@
 
 **Jan 16**
 - Conducted a code review of the initial wrapper. 
-- **Decision:** Identified a need for a mountain-specific dataset. Researched and sourced the Andrew Kirmse 2023 prominence dataset to ensure our "mountaineering" niche was data-backed.
 
 **Jan 17**
 - Explored the Open-Meteo API documentation further to determine default variables.
-- **Decision:** Defined `default_variables` (rain, snowfall, cloud cover, etc.) to simplify the user experience, allowing beginners to get relevant data without manually specifying parameters.
+- Defined `default_variables` (rain, snowfall, cloud cover, etc.) to simplify the user experience, allowing beginners to get relevant data without manually specifying parameters.
 
 **Jan 18**
 - Drafted the project proposal report.
 
 **Jan 19**
 - Finalized the project proposal.
-- Refined the methodology section, specifically how we would calculate distances using the `geosphere` library and `distHaversine` formula.
 
 **Jan 20**
 - Prepared presentation slides for the proposal.
-- Created visual representations of how the `forecast_mountains` function would iterate through mountain lists to provide a side-by-side comparison.
 
 **Jan 21**
 - No work.
 
 **Jan 22**
 - Presented proposal to the class and received feedback from the instructor regarding "uniqueness."
-- **Pivot Decision:** Shifted focus from historical data to real-time forecasting. This allows mountaineers to use the tool for trip planning.
+- Shifted focus from historical data to real-time forecasting. This allows mountaineers to use the tool for trip planning.
 - Focused on the "Gap Analysis"—noting that while `ropenmeteo` exists, there isn't a package specifically catering to mountain summit comparisons.
 - Refined the logic for the `forecast_mountains` function to ensure it could handle different `time_resolution` arguments dynamically.
+- Identified a need for a mountain-specific dataset. Researched and sourced the Andrew Kirmse 2023 prominence dataset to ensure our "mountaineering" niche was data-backed.
+- Created visual representations of how the `forecast_mountains` function would iterate through mountain lists to provide a side-by-side comparison.
 - Integrated the mountain summit dataset logic: merged mountain filtering with API calling.
 - [Commit](https://github.com/spandandey12/Data534_project/commit/426bc95a3fe283cf73f024d36363fa84d42242ef)
 
 **Jan 23**
 - Began drafting the `get_nearest_mountains` function.
-- **Decision:** Added `prominence_threshold` and `elevation_threshold` as parameters. This is crucial for mountaineers who only want to find "significant" peaks rather than small hills.
+- Refined the methodology section, specifically how we would calculate distances using the `geosphere` library and `distHaversine` formula.
+- Added `prominence_threshold` and `elevation_threshold` as parameters. This is crucial for mountaineers who only want to find "significant" peaks rather than small hills.
 
 **Jan 24**
 - Debugging session for the `geosphere` integration.
@@ -59,7 +59,7 @@
 
 **Jan 27**
 - Collaborative Troubleshooting: Helped a teammate resolve a corrupted local file.
-- **Decision:** Reverted to a previous commit and added changes manually from there.
+- Reverted to a previous commit and added changes manually from there.
 
 **Jan 28**
 - Substantial README update.
@@ -70,7 +70,7 @@
 
 **Jan 29**
 - Refined the `forecast_mountains` loop.
-- **Decision:** Optimized the way the dataframe is initialized using `rownames(mountain)` to ensure the output table is easy for users to read at a glance.
+- Optimized the way the dataframe is initialized using `rownames(mountain)` to ensure the output table is easy for users to read at a glance.
 
 **Jan 30**
 - Review of the package vignette.
@@ -80,7 +80,7 @@
 - No work.
 
 **Feb 1**
-- Final team meeting before submission.
+- Final team meeting before submission. Helped with package structure to make the project an R package.
 - Reviewed the final presentation slides and synchronized the package versioning.
 
 **Feb 2**
