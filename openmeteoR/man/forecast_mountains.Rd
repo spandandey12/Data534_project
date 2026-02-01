@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_wrapper.R
 \name{forecast_mountains}
 \alias{forecast_mountains}
-\title{Forecast a weather feature for multiple mountains}
+\title{Get forecasts for multiple mountains over a date range}
 \usage{
 forecast_mountains(
   mountains,
@@ -13,21 +13,20 @@ forecast_mountains(
 )
 }
 \arguments{
-\item{mountains}{A data.frame containing `latitude` and `longitude` columns.}
+\item{mountains}{data.frame containing columns `latitude` and `longitude`}
 
-\item{start_date}{Date or character (YYYY-MM-DD). Start date.}
+\item{start_date}{Date or string coercible to Date}
 
-\item{end_date}{Date or character (YYYY-MM-DD). End date.}
+\item{end_date}{Date or string coercible to Date}
 
-\item{time_resolution}{Character. Either "hourly" or "daily".}
+\item{time_resolution}{"hourly" or "daily"}
 
-\item{weather_feature}{Character. Single weather variable name, e.g. "temperature_2m".}
+\item{weather_feature}{single variable name string (e.g. "temperature_2m")}
 }
 \value{
-A data.frame with a `time` column and one column per mountain.
+A data.frame: `time` column + one column per mountain rowname.
 }
 \description{
-Given a data frame of mountains (must contain latitude/longitude), fetch the
-requested weather feature for each mountain and return a wide data frame
-with one column per mountain and a shared time column.
+Given a mountains data.frame (must include latitude/longitude), fetches forecasts
+for each mountain and returns a wide data.frame with time and one column per mountain.
 }

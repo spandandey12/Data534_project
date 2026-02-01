@@ -14,22 +14,21 @@ get_forecast(
 )
 }
 \arguments{
-\item{latitude}{Numeric. Latitude in [-90, 90].}
+\item{latitude}{numeric scalar}
 
-\item{longitude}{Numeric. Longitude in [-180, 180].}
+\item{longitude}{numeric scalar}
 
-\item{start_date}{Date or character (YYYY-MM-DD). Start date.}
+\item{start_date}{Date or string coercible to Date}
 
-\item{end_date}{Date or character (YYYY-MM-DD). End date.}
+\item{end_date}{Date or string coercible to Date}
 
-\item{time_resolution}{Character. Either "hourly" or "daily".}
+\item{time_resolution}{"hourly" or "daily"}
 
-\item{variables}{Character vector of weather variable names. Defaults to common hourly variables.}
+\item{variables}{character vector of variable names}
 }
 \value{
-A data.frame with a `time` column and one column per requested variable.
+A data.frame containing forecast time and requested variables.
 }
 \description{
-Fetch hourly or daily weather data for a given location and date range.
-The Open-Meteo Forecast API supports up to 16 days ahead.
+Fetches hourly or daily forecast data for a given latitude/longitude and date range.
 }

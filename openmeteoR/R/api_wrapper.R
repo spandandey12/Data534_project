@@ -1,4 +1,18 @@
-# ---- constants ----
+#' Internal helper: load mountains dataset from installed package
+#'
+#' Loads `inst/extdata/mountains.csv` shipped with the package.
+#'
+#' @return A data.frame of mountains.
+#' @keywords internal
+load_mountains <- function() {
+  f <- system.file("extdata", "mountains.csv", package = "openmeteoR")
+  
+  if (f == "") {
+    stop("mountains.csv not found in installed package.")
+  }
+  
+  utils::read.csv(f, header = TRUE)
+}
 
 # The default weather variables fetched by the API, all are hourly
 default_variables <- c(
@@ -11,8 +25,14 @@ default_variables <- c(
   "cloud_cover"
 )
 
-# ---- helpers ----
+# ---- Validation helpers ----
 
+#' Internal helper: validate latitude / longitude
+#'
+#' @param latitude numeric scalar
+#' @param longitude numeric scalar
+#' @return NULL (throws error if invalid)
+#' @keywords internal
 check_lat_lon <- function(latitude, longitude) {
   if (!is.numeric(latitude) || length(latitude) != 1 || is.na(latitude)) {
     stop("latitude must be a single numeric value (not NA).")
@@ -20,10 +40,22 @@ check_lat_lon <- function(latitude, longitude) {
   if (!is.numeric(longitude) || length(longitude) != 1 || is.na(longitude)) {
     stop("longitude must be a single numeric value (not NA).")
   }
-  if (latitude < -90 || latitude > 90) stop("latitude must be between -90 and 90.")
-  if (longitude < -180 || longitude > 180) stop("longitude must be between -180 and 180.")
+  if (latitude < -90 || latitude > 90) {
+    stop("latitude must be between -90 and 90.")
+  }
+  if (longitude < -180 || longitude > 180) {
+    stop("longitude must be between -180 and 180.")
+  }
 }
 
+#' Internal helper: validate forecast date range
+#'
+#' Open-Meteo Forecast API supports forecasts up to 16 days ahead.
+#'
+#' @param start_date Date or string coercible to Date
+#' @param end_date Date or string coercible to Date
+#' @return list(start_date=Date, end_date=Date)
+#' @keywords internal
 check_date_forecast <- function(start_date, end_date) {
   start_date <- as.Date(start_date)
   end_date   <- as.Date(end_date)
@@ -31,7 +63,9 @@ check_date_forecast <- function(start_date, end_date) {
   if (is.na(start_date) || is.na(end_date)) {
     stop("start_date and end_date must be valid dates like '2026-01-23'.")
   }
-  if (start_date > end_date) stop("start_date must be before or equal to end_date.")
+  if (start_date > end_date) {
+    stop("start_date must be before or equal to end_date.")
+  }
   
   max_end <- Sys.Date() + 16
   if (end_date > max_end) {
@@ -44,25 +78,77 @@ check_date_forecast <- function(start_date, end_date) {
   list(start_date = start_date, end_date = end_date)
 }
 
-# Load mountains from extdata
-load_mountains <- function() {
-  f <- system.file("extdata", "mountains.csv", package = "openmeteoR")
-  if (f == "") stop("mountains.csv not found in installed package.")
-  utils::read.csv(f, header = TRUE)
+# ---- Core API helpers ----
+
+#' Internal: call Open-Meteo forecast endpoint and return raw httr2 response
+#'
+#' @param latitude numeric scalar
+#' @param longitude numeric scalar
+#' @param start_date Date/string
+#' @param end_date Date/string
+#' @param daily_variables character vector
+#' @param hourly_variables character vector
+#' @return httr2_response
+#' @keywords internal
+get_forecast_raw <- function(latitude,
+                             longitude,
+                             start_date,
+                             end_date,
+                             daily_variables = c(),
+                             hourly_variables = c()) {
+  
+  check_lat_lon(latitude, longitude)
+  
+  dates <- check_date_forecast(start_date, end_date)
+  start_date <- format(dates$start_date, "%Y-%m-%d")
+  end_date   <- format(dates$end_date, "%Y-%m-%d")
+  
+  req <- httr2::req_url_query(
+    httr2::request("https://api.open-meteo.com/v1/forecast"),
+    latitude   = latitude,
+    longitude  = longitude,
+    start_date = start_date,
+    end_date   = end_date,
+    daily      = paste(daily_variables, collapse = ","),
+    hourly     = paste(hourly_variables, collapse = ",")
+  )
+  
+  response <- httr2::req_perform(req)
+  
+  if (httr2::resp_status(response) != 200) {
+    err_json <- tryCatch(httr2::resp_body_json(response), error = function(e) NULL)
+    
+    if (!is.null(err_json) && !is.null(err_json$reason)) {
+      stop(sprintf(
+        "Open-Meteo API request failed (HTTP %s): %s",
+        httr2::resp_status(response),
+        err_json$reason
+      ))
+    } else {
+      stop(sprintf(
+        "Open-Meteo API request failed (HTTP %s).",
+        httr2::resp_status(response)
+      ))
+    }
+  }
+  
+  response
 }
 
-# ---- exported functions ----
+# ---- Public functions ----
 
-#' Get a weather forecast (hourly or daily) from Open-Meteo.
+#' Get weather forecast from Open-Meteo
 #'
-#' @param latitude Numeric. Latitude (-90..90).
-#' @param longitude Numeric. Longitude (-180..180).
-#' @param start_date Date or string coercible to Date.
-#' @param end_date Date or string coercible to Date.
-#' @param time_resolution "hourly" or "daily".
-#' @param variables Character vector of requested variables.
+#' Fetches hourly or daily forecast data for a given latitude/longitude and date range.
 #'
-#' @return A data.frame with a time column and requested variables.
+#' @param latitude numeric scalar
+#' @param longitude numeric scalar
+#' @param start_date Date or string coercible to Date
+#' @param end_date Date or string coercible to Date
+#' @param time_resolution "hourly" or "daily"
+#' @param variables character vector of variable names
+#'
+#' @return A data.frame containing forecast time and requested variables.
 #' @export
 get_forecast <- function(latitude,
                          longitude,
@@ -74,74 +160,54 @@ get_forecast <- function(latitude,
   if (!time_resolution %in% c("hourly", "daily")) {
     stop('time_resolution must be "hourly" or "daily".')
   }
+  
   if (!is.character(variables) || length(variables) < 1) {
     stop("variables must be a non-empty character vector.")
   }
   
-  check_lat_lon(latitude, longitude)
-  
-  dates <- check_date_forecast(start_date, end_date)
-  start_date <- format(dates$start_date, "%Y-%m-%d")
-  end_date   <- format(dates$end_date, "%Y-%m-%d")
-  
-  # build request (use httr2:: explicitly)
-  req <- httr2::request("https://api.open-meteo.com/v1/forecast")
-  
   if (time_resolution == "hourly") {
-    req <- httr2::req_url_query(
-      req,
-      latitude   = latitude,
-      longitude  = longitude,
-      start_date = start_date,
-      end_date   = end_date,
-      hourly     = paste(variables, collapse = ",")
+    response <- get_forecast_raw(
+      latitude         = latitude,
+      longitude        = longitude,
+      start_date       = start_date,
+      end_date         = end_date,
+      hourly_variables = variables
     )
-  } else {
-    req <- httr2::req_url_query(
-      req,
-      latitude   = latitude,
-      longitude  = longitude,
-      start_date = start_date,
-      end_date   = end_date,
-      daily      = paste(variables, collapse = ",")
-    )
-  }
-  
-  response <- httr2::req_perform(req)
-  
-  if (httr2::resp_status(response) != 200) {
-    err_json <- tryCatch(httr2::resp_body_json(response), error = function(e) NULL)
-    if (!is.null(err_json) && !is.null(err_json$reason)) {
-      stop(sprintf("Open-Meteo API request failed (HTTP %s): %s",
-                   httr2::resp_status(response), err_json$reason))
-    } else {
-      stop(sprintf("Open-Meteo API request failed (HTTP %s).",
-                   httr2::resp_status(response)))
-    }
-  }
-  
-  data_json <- httr2::resp_body_json(response)
-  
-  if (time_resolution == "hourly") {
-    weather_data <- as.data.frame(lapply(data_json$hourly, unlist))
+    
+    data_json <- httr2::resp_body_json(response)
+    
+    weather_data <- as.data.frame(lapply(data_json$hourly, function(x) unlist(x)))
     weather_data$time <- as.POSIXct(weather_data$time, format = "%Y-%m-%dT%H:%M")
   } else {
-    weather_data <- as.data.frame(lapply(data_json$daily, unlist))
+    response <- get_forecast_raw(
+      latitude        = latitude,
+      longitude       = longitude,
+      start_date      = start_date,
+      end_date        = end_date,
+      daily_variables = variables
+    )
+    
+    data_json <- httr2::resp_body_json(response)
+    
+    weather_data <- as.data.frame(lapply(data_json$daily, function(x) unlist(x)))
     weather_data$time <- as.Date(weather_data$time, format = "%Y-%m-%d")
   }
   
   weather_data
 }
 
-#' Get the nearest mountains to a location.
+#' Get nearest mountains to an input location
 #'
-#' @param latitude Numeric.
-#' @param longitude Numeric.
-#' @param num_mountains Integer >= 1.
-#' @param prominence_threshold Numeric >= 0.
-#' @param elevation_threshold Numeric >= 0.
+#' Finds the nearest mountains based on great-circle distance, after filtering by
+#' prominence and elevation thresholds.
 #'
-#' @return A data.frame of nearest mountains with distance_km.
+#' @param latitude numeric scalar
+#' @param longitude numeric scalar
+#' @param num_mountains integer >= 1
+#' @param prominence_threshold numeric >= 0
+#' @param elevation_threshold numeric >= 0
+#'
+#' @return A data.frame of mountains (subset) with an added `distance_km` column.
 #' @export
 get_nearest_mountains <- function(latitude,
                                   longitude,
@@ -151,18 +217,16 @@ get_nearest_mountains <- function(latitude,
   
   check_lat_lon(latitude, longitude)
   
-  if (!is.numeric(num_mountains) || length(num_mountains) != 1 ||
-      is.na(num_mountains) || num_mountains < 1) {
+  if (!is.numeric(num_mountains) || length(num_mountains) != 1 || is.na(num_mountains) || num_mountains < 1) {
     stop("num_mountains must be a single number >= 1.")
   }
   num_mountains <- as.integer(num_mountains)
   
-  if (!is.numeric(prominence_threshold) || length(prominence_threshold) != 1 ||
-      is.na(prominence_threshold) || prominence_threshold < 0) {
+  if (!is.numeric(prominence_threshold) || length(prominence_threshold) != 1 || is.na(prominence_threshold) || prominence_threshold < 0) {
     stop("prominence_threshold must be a single number >= 0.")
   }
-  if (!is.numeric(elevation_threshold) || length(elevation_threshold) != 1 ||
-      is.na(elevation_threshold) || elevation_threshold < 0) {
+  
+  if (!is.numeric(elevation_threshold) || length(elevation_threshold) != 1 || is.na(elevation_threshold) || elevation_threshold < 0) {
     stop("elevation_threshold must be a single number >= 0.")
   }
   
@@ -185,18 +249,21 @@ get_nearest_mountains <- function(latitude,
   
   mountains_sorted <- mountains_temp[order(mountains_temp$distance_km), ]
   
-  head(mountains_sorted, num_mountains)
+  utils::head(mountains_sorted, num_mountains)
 }
 
-#' Get forecasts for each mountain (one column per mountain).
+#' Get forecasts for multiple mountains over a date range
 #'
-#' @param mountains data.frame containing latitude/longitude columns.
-#' @param start_date Date or string coercible to Date.
-#' @param end_date Date or string coercible to Date.
-#' @param time_resolution "hourly" or "daily".
-#' @param weather_feature Single variable name (string).
+#' Given a mountains data.frame (must include latitude/longitude), fetches forecasts
+#' for each mountain and returns a wide data.frame with time and one column per mountain.
 #'
-#' @return A data.frame with time column + one column per mountain.
+#' @param mountains data.frame containing columns `latitude` and `longitude`
+#' @param start_date Date or string coercible to Date
+#' @param end_date Date or string coercible to Date
+#' @param time_resolution "hourly" or "daily"
+#' @param weather_feature single variable name string (e.g. "temperature_2m")
+#'
+#' @return A data.frame: `time` column + one column per mountain rowname.
 #' @export
 forecast_mountains <- function(mountains,
                                start_date,
@@ -207,9 +274,11 @@ forecast_mountains <- function(mountains,
   if (!is.data.frame(mountains) || nrow(mountains) == 0) {
     stop("mountains must be a non-empty dataframe.")
   }
+  
   if (!all(c("latitude", "longitude") %in% names(mountains))) {
     stop("mountains must contain columns: latitude and longitude.")
   }
+  
   if (!is.character(weather_feature) || length(weather_feature) != 1) {
     stop("weather_feature must be a single character string, e.g. 'temperature_2m'.")
   }
@@ -237,7 +306,8 @@ forecast_mountains <- function(mountains,
       mountain_weather$time <- forecast$time
     }
     
-    mountain_weather[[rownames(mountain)]] <- forecast[[weather_feature]]
+    mountain_column_name <- rownames(mountain)
+    mountain_weather[[mountain_column_name]] <- forecast[[weather_feature]]
   }
   
   mountain_weather
