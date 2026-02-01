@@ -25,7 +25,11 @@ A low-level helper function that constructs and sends the API request to Open-Me
 * After the equest is performed, checks **resp_status(response)**. If status is not 200, the function stops with an informative message. If the JSON body contains a **reason** field, it is included in the error message.
 
 #### Unit Testing:
-* SOMETHING
+* Test argument validation and early failures using testthat.
+* Covers date edge cases and forecast-window constraints.
+* Mocks API responses to avoid live network calls.
+* Verfies proper error handling for non-200 HTTP responses including propagation of API-provided reasons. 
+
 
 ### `get_forecast`
 Fetches weather data for a specific location and returns a structured dataframe with a formatted time column.
@@ -44,7 +48,10 @@ Fetches weather data for a specific location and returns a structured dataframe 
 * Uses get_forecast_raw() to handle coordinate and date validation along with HTTP error checking.
 
 #### Unit Testing:
-* SOMETHING
+* Tests input validation for resolution and varaibles using testthat.
+* Mocks API responses to validate parsing logic for hurly and daily forecasts.
+* Verifies output structure and column naming.
+* Confirms error propafation from get_forecast_raw().
 
 ### `get_nearest_mountains`
 Finds the closest mountain peaks to a specific coordinate that are above elevation and prominence thresholds.
@@ -64,7 +71,10 @@ Finds the closest mountain peaks to a specific coordinate that are above elevati
 * If no mountains meet the filtering thresholds, stops with: ** "No mountains match your thresholds. Try lowering prominence_threshold/elevation_threshold."**
 
 #### Unit Testing:
-* SOMETHING
+* Tests argument validation and threshold checks using testthat.
+* Verifies filtering and distance-based ordering logic.
+* Covers no-match edge cases with clear error messages.
+* Confirms output structure and column names.
 
 ### `forecast_mountains`
 A wrapper that iterates through a dataframe of mountains to create a comparative weather table.
@@ -85,4 +95,7 @@ A wrapper that iterates through a dataframe of mountains to create a comparative
 * Relies on **get_forecast()**/**get_forecast_raw()** for coordinate/date/API error handling while looping through mountains.
 
 #### Unit Testing:
-* SOMETHING
+* Test input validation for mountain data and weathers.
+* Mocks API calls to validate looping and aggregation logic.
+* Verifies output structure and column naming.
+* Confirms proper error propagation.
