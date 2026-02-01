@@ -1,6 +1,7 @@
 # Mountain Weather Forecasting
 
-This R package provides functions to find nearby mountains summits and to compare weather forecasts of those locations. This would be of interest to mountaineers, to help them decide which mountains to hike near their home or a destination. Weather forecasting is done using the [Open-Meteo API](https://open-meteo.com/). The mountain data is from [Andrew Kirmse](https://www.andrewkirmse.com/prominence-update-2023) in the form of a csv file. Although R wrappers for this API do exist already (such as [ropenmeteo](https://github.com/FLARE-forecast/ropenmeteo) and [openmeteo](https://tpisel.r-universe.dev/openmeteo)), none of these other wrappers have added functionality specific to mountaineering. A vignette is provided to provide an example of how to use the package.
+This R package provides functions to find nearby mountains summits and to compare weather forecasts of those locations. This would be of interest to mountaineers, to help them decide which mountains to hike near their home or a destination. Weather forecasting is done using the [Open-Meteo API](https://open-meteo.com/). The mountain data is from [Andrew Kirmse](https://www.andrewkirmse.com/prominence-update-2023) in the form of a csv file. Although R wrappers for this API do exist already (such as [ropenmeteo](https://github.com/FLARE-forecast/ropenmeteo) and [openmeteo](https://tpisel.r-universe.dev/openmeteo)), none of these other wrappers have added functionality specific to mountaineering. A vignette is provided to provide an example of how to use the package. All the code for the unit tests can be found here:
+`Data534_project/openmeteoR/tests/testthat/test-api-wrapper.R`.
 
 **Dependencies:** `httr2`, `ggplot2`, `readr`, `geosphere`
 
@@ -91,7 +92,7 @@ A wrapper that iterates through a dataframe of mountains to create a comparative
 * Ensures **mountains** is a non-empty dataframe.
 * Ensures **mountains** contains **latitude** and **longtitude** columns.
 * Ensures **weather_feature** is a single character string.
-* If the mountains dataframe has missing/empty rownames, assigns default names (**mountain_1**, **mountain_1**,...) o ensure valid output column names.
+* If the mountains dataframe has missing/empty rownames, assigns default names (**mountain_1**, **mountain_2**,...) to ensure valid output column names.
 * Relies on **get_forecast()**/**get_forecast_raw()** for coordinate/date/API error handling while looping through mountains.
 
 #### Unit Testing:
