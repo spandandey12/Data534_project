@@ -16,6 +16,9 @@ A low-level helper function that constructs and sends the API request to Open-Me
 * **daily_variables**: (Vector) List of daily weather variables to request.
 * **hourly_variables**: (Vector) List of hourly weather variables to request.
 
+#### Returns
+* **httr2_response**: The raw response from the API.
+
 #### Error Handling:
 * Validates **latitude** and **longitude** using **check_lat_lon()** (must be single numeric values and within valid coordinate ranges).
 * Validates **start_date** and **end_date** using **check_date_forecast()** (must be valid dates, start_date <= end_date, and end_date must be within 16 days of today due to the Open-Meteo Forecast API limit).
@@ -31,6 +34,9 @@ Fetches weather data for a specific location and returns a structured dataframe 
 * **start_date / end_date**: (String) Forecast date range.
 * **time_resolution**: (String) Either `"hourly"` or `"daily"`.
 * **variables**: (Vector) The weather metrics to retrieve (e.g., temperature, rain, snowfall).
+
+#### Returns
+* **data.frame**: It contains a time column and additional columns for every weather variable passed in the variables arguments.
 
 #### Error Handling:
 * Ensures **time_resolution** is either **"hourly"** or **"daily"** or else stops with an error
@@ -48,6 +54,9 @@ Finds the closest mountain peaks to a specific coordinate that are above elevati
 * **prominence_threshold**: (Numeric) Minimum prominence in meters (Default: 500).
 * **elevation_threshold**: (Numeric) Minimum elevation in meters (Default: 0).
 
+#### Returns
+* **data.frame**: It contains the location and elevation of the nearest mountains.
+
 #### Error Handling:
 * Validates **latitude** and **longitude** using **check_lat_lon()**.
 * Validates **num_mountains** is a single numeric value **>1**
@@ -64,6 +73,9 @@ A wrapper that iterates through a dataframe of mountains to create a comparative
 * **start_date / end_date**: (String) Forecast date range.
 * **time_resolution**: (String) Either `"hourly"` or `"daily"`.
 * **weather_feature**: (String) The specific weather variable to extract into the final table (Default: `"temperature_2m"`).
+
+#### Returns
+* **data.frame**: It contains a time column and additional columns for every mountains being forecasted.
 
 #### Error Handling:
 * Ensures **mountains** is a non-empty dataframe.
