@@ -2,7 +2,7 @@
 % Please edit documentation in R/api_wrapper.R
 \name{get_nearest_mountains}
 \alias{get_nearest_mountains}
-\title{Find nearest mountains to a location}
+\title{Get nearest mountains to an input location}
 \usage{
 get_nearest_mountains(
   latitude,
@@ -13,20 +13,20 @@ get_nearest_mountains(
 )
 }
 \arguments{
-\item{latitude}{Numeric. Latitude in [-90, 90].}
+\item{latitude}{numeric scalar}
 
-\item{longitude}{Numeric. Longitude in [-180, 180].}
+\item{longitude}{numeric scalar}
 
-\item{num_mountains}{Integer. Number of mountains to return (>= 1).}
+\item{num_mountains}{integer >= 1}
 
-\item{prominence_threshold}{Numeric. Minimum prominence (>= 0).}
+\item{prominence_threshold}{numeric >= 0}
 
-\item{elevation_threshold}{Numeric. Minimum elevation (>= 0).}
+\item{elevation_threshold}{numeric >= 0}
 }
 \value{
-A data.frame of the nearest mountains with an added `distance_km` column.
+A data.frame of mountains (subset) with an added `distance_km` column.
 }
 \description{
-Filter a built-in mountains dataset by prominence/elevation thresholds,
-compute Haversine distance to an input point, and return the closest rows.
+Finds the nearest mountains based on great-circle distance, after filtering by
+prominence and elevation thresholds.
 }
