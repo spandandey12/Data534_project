@@ -14,24 +14,25 @@ We have gone public. Anyone can install this package in Windows, Mac, or Linux e
 
 ```
 Data534_project/
-├── notebooks/                      # Daily logs of contributions and progress
+├── notebooks/                       # Daily logs of contributions and progress
 │   ├── Jamie.md
 │   ├── Rex.md
 │   └── Spandan.md
-├── openmeteoR/                     # Core R Package
-│   ├── DESCRIPTION                 # Package metadata and dependencies
-│   ├── NAMESPACE                   # Exported functions
+├── openmeteoR/                      # Core R Package
+│   ├── DESCRIPTION                  # Package metadata and dependencies
+│   ├── NAMESPACE                    # Exported functions
 │   ├── R/                     
-│   │   └── api_wrapper.R           # R function definitions
+│   │   └── api_wrapper.R            # R function definitions
 │   └── data/   
 │       └── inst/                  
 │           └── extdata/
-│               └── mountains.csv   # Dataset of mountain summits
-├── images/                          
+│               └── mountains.csv    # Dataset of mountain summits
+├── misc/      
+│   ├── 534-Final_Presentation.pptx  # Powerpoint for final class presentation
 │   └── passed_unit_tests.jpeg       # Screenshot proving that unit tests pass
-├── vignette                        # Example of package use
-├── contributions.md                # Document to outline author contributions
-└── README.md                       # Project documentaion
+├── vignette                         # Example of package use
+├── contributions.md                 # Document to outline author contributions
+└── README.md                        # Project documentaion
 ```
 
 ---
