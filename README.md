@@ -36,30 +36,7 @@ Data534_project/
 
 ## Functions
 
-### `get_forecast_raw`
-A low-level helper function that constructs and sends the API request to Open-Meteo using `httr2`.
-
-* **latitude / longitude**: (Numeric) The coordinates for the forecast.
-* **start_date / end_date**: (String) The time window in `YYYY-MM-DD` format.
-* **daily_variables**: (Vector) List of daily weather variables to request.
-* **hourly_variables**: (Vector) List of hourly weather variables to request.
-
-#### Returns
-* **httr2_response**: The raw response from the API.
-
-#### Error Handling:
-* Validates **latitude** and **longitude** using **check_lat_lon()** (must be single numeric values and within valid coordinate ranges).
-* Validates **start_date** and **end_date** using **check_date_forecast()** (must be valid dates, start_date <= end_date, and end_date must be within 16 days of today due to the Open-Meteo Forecast API limit).
-* After the equest is performed, checks **resp_status(response)**. If status is not 200, the function stops with an informative message. If the JSON body contains a **reason** field, it is included in the error message.
-
-#### Unit Testing:
-* Test argument validation and early failures using testthat.
-* Covers date edge cases and forecast-window constraints.
-* Mocks API responses to avoid live network calls.
-* Verfies proper error handling for non-200 HTTP responses including propagation of API-provided reasons. 
-
-
-### `get_forecast`
+## `get_forecast`
 Fetches weather data for a specific location and returns a structured dataframe with a formatted time column.
 
 * **latitude / longitude**: (Numeric) Target coordinates.
@@ -81,7 +58,7 @@ Fetches weather data for a specific location and returns a structured dataframe 
 * Verifies output structure and column naming.
 * Confirms error propafation from get_forecast_raw().
 
-### `get_nearest_mountains`
+## `get_nearest_mountains`
 Finds the closest mountain peaks to a specific coordinate that are above elevation and prominence thresholds.
 
 * **latitude / longitude**: (Numeric) The reference point to measure distance from.
@@ -104,7 +81,7 @@ Finds the closest mountain peaks to a specific coordinate that are above elevati
 * Covers no-match edge cases with clear error messages.
 * Confirms output structure and column names.
 
-### `forecast_mountains`
+## `forecast_mountains`
 A wrapper that iterates through a dataframe of mountains to create a comparative weather table.
 
 * **mountains**: (Dataframe) A dataframe containing mountain coordinates (typically the output of `get_nearest_mountains`).
