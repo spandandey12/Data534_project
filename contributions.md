@@ -10,6 +10,6 @@ We will each work in our own branch, committing often. When we complete a sectio
 | Vignette              | Spandan     |
 | Unit Tests            | Rex         |
 | Continuous Integration| Rex         |
-| Documentation         | Jamie, Spandan, Rex |
+| Documentation         | Jamie, Spandan |
 | Go Public             | Rex         |
 | Presentation 2        | Jamie, Spandan |
