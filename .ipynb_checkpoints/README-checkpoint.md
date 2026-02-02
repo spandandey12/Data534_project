@@ -15,6 +15,9 @@ We have gone public. Anyone can install this package in Windows, Mac, or Linux e
 ```
 Data534_project/
 ├── notebooks/                     # Daily logs of contributions and progress
+│   ├── Jamie.md
+│   ├── Rex.md
+│   └── Spandan.md
 ├── openmeteoR/                    # Core R Package
 │   ├── DESCRIPTION                # Package metadata and dependencies
 │   ├── NAMESPACE                  # Exported functions
