@@ -23,10 +23,10 @@ Data534_project/
 │   ├── NAMESPACE                   # Exported functions
 │   ├── R/                     
 │   │   └── api_wrapper.R           # R function definitions
-│   └── tests/                  
-│       └── testthat/
-│           └── test-api-wrapper.R  # Unit tests
-├────── data/   
+│   ├── tests/                  
+│   │   └── testthat/
+│   │       └── test-api-wrapper.R  # Unit tests
+│   └── data/   
 │       └── inst/                  
 │           └── extdata/
 │               └── mountains.csv   # Dataset of mountain summits
