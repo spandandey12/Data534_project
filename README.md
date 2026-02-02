@@ -26,8 +26,10 @@ Data534_project/
 │   └── tests/                  
 │       └── testthat/
 │           └── test-api-wrapper.R  # Unit tests
-├── data/                          
-│   └── mountains.csv               # Dataset of mountain summits
+├────── data/   
+│       └── inst/                  
+│           └── extdata/
+│               └── mountains.csv   # Dataset of mountain summits
 ├── images/                          
 │   └── passed_unit_tests.png       # Screenshot proving that unit tests pass
 ├── vignette                        # Example of package use
