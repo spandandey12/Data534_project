@@ -8,6 +8,11 @@ We have gone public. Anyone can install this package in Windows, Mac, or Linux e
 
 **Dependencies:** `httr2`, `ggplot2`, `readr`, `geosphere`
 
+**Authors:**
+* Jamie Breault - 26478172
+* Pokai Tseng - 96500053
+* Spandan Dey - 19289180
+
 ---
 
 ## Project Structure
