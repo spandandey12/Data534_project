@@ -23,15 +23,12 @@ Data534_project/
 │   ├── NAMESPACE                   # Exported functions
 │   ├── R/                     
 │   │   └── api_wrapper.R           # R function definitions
-│   ├── tests/                  
-│   │   └── testthat/
-│   │       └── test-api-wrapper.R  # Unit tests
 │   └── data/   
 │       └── inst/                  
 │           └── extdata/
 │               └── mountains.csv   # Dataset of mountain summits
 ├── images/                          
-│   └── passed_unit_tests.png       # Screenshot proving that unit tests pass
+│   └── passed_unit_tests.jpeg       # Screenshot proving that unit tests pass
 ├── vignette                        # Example of package use
 ├── contributions.md                # Document to outline author contributions
 └── README.md                       # Project documentaion
@@ -78,7 +75,7 @@ Finds the closest mountain peaks to a specific coordinate that are above elevati
 * Validates **latitude** and **longitude** using **check_lat_lon()**.
 * Validates **num_mountains** is a single numeric value **>1**
 * Validates **prominence_threshold** and **elevation_threshold** are single numeric values **>0**.
-* If no mountains meet the filtering thresholds, stops with: ** "No mountains match your thresholds. Try lowering prominence_threshold/elevation_threshold."**
+* If no mountains meet the filtering thresholds, stops with: **"No mountains match your thresholds. Try lowering prominence_threshold/elevation_threshold."**
 
 #### Unit Testing:
 * Tests argument validation and threshold checks using testthat.
