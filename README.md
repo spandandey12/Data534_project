@@ -1,9 +1,35 @@
 # Mountain Weather Forecasting
 
-This R package provides functions to find nearby mountains summits and to compare weather forecasts of those locations. This would be of interest to mountaineers, to help them decide which mountains to hike near their home or a destination. Weather forecasting is done using the [Open-Meteo API](https://open-meteo.com/). The mountain data is from [Andrew Kirmse](https://www.andrewkirmse.com/prominence-update-2023) in the form of a csv file. Although R wrappers for this API do exist already (such as [ropenmeteo](https://github.com/FLARE-forecast/ropenmeteo) and [openmeteo](https://tpisel.r-universe.dev/openmeteo)), none of these other wrappers have added functionality specific to mountaineering. A vignette is provided to provide an example of how to use the package. All the code for the unit tests can be found here:
-`Data534_project/openmeteoR/tests/testthat/test-api-wrapper.R`.
+This R package provides functions to find nearby mountains summits and to compare weather forecasts of those locations. This would be of interest to mountaineers, to help them decide which mountains to hike near their home or a destination. Weather forecasting is done using the [Open-Meteo API](https://open-meteo.com/). The mountain data is from [Andrew Kirmse](https://www.andrewkirmse.com/prominence-update-2023) in the form of a csv file. Although R wrappers for this API do exist already (such as [ropenmeteo](https://github.com/FLARE-forecast/ropenmeteo) and [openmeteo](https://tpisel.r-universe.dev/openmeteo)), none of these other wrappers have added functionality specific to mountaineering. A vignette is provided to provide an example of how to use the package. All the code for the unit tests can be found here: `Data534_project/openmeteoR/tests/testthat/test-api-wrapper.R`. 
+
+
+We have gone public. Anyone can install this package in Windows, Mac, or Linux environments by running this line in R:
+`devtools::install_github("spandandey12/Data534_project", subdir = "openmeteoR")`
 
 **Dependencies:** `httr2`, `ggplot2`, `readr`, `geosphere`
+
+---
+
+## Project Structure
+
+```
+Data534_project/
+├── notebooks/                     # Daily logs of contributions and progress
+├── openmeteoR/                    # Core R Package
+│   ├── DESCRIPTION                # Package metadata and dependencies
+│   ├── NAMESPACE                  # Exported functions
+│   ├── R/                     
+│   │   └── api_wrapper.R          # R function definitions
+│   └── tests/                  
+│       └── testthat/
+│           └── test-api-wrapper.R # Unit tests
+├── data/                          
+│   └── mountains.csv              # Dataset of mountain summits
+├── images/                          
+│   └── passed_unit_tests.png      # Screenshot proving that unit tests pass
+├── vignette                       # Example of package use
+└── README.md                      # Project documentaion
+```
 
 ---
 
